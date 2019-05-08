@@ -1,0 +1,105 @@
+/**index.wxss**/
+.panel {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 150rpx;
+}
+.subtitle {
+  margin: 16rpx 0;
+}
+.input {
+  margin: 16rpx 0;
+  padding: 16rpx;
+  background-color: #ffffff;
+  height: 48rpx;
+  width: 512rpx;
+  border-width: 1rpx;
+  border-style: solid;
+  border-color: #ccc;
+  border-radius: 10rpx;
+}
+.btn {
+  margin: 15rpx 0;
+}
+
+.main {
+  width: 90%;
+  height: 100%;
+}
+.top-bar {
+  position: fixed;
+  top: 0;
+  width: 90%;
+  height: 72rpx;
+}
+.top-bar-left {
+  position: absolute;
+  width: 80%;
+}
+.top-bar-right {
+  position: absolute;
+  width: 64rpx;
+  right: 0;
+  top: 0;
+}
+.menu-btn {
+  height: 64rpx;
+  width: 64rpx;
+  margin: 0;
+  padding: 0rpx;
+  font-size: 24rpx;
+  border-width: 0;
+  border-style: none;
+  background-color: #ffffff
+}
+.record-list {
+  margin-top: 150rpx
+}
+.record-none-text {
+  text-align: center;
+  font-size: 12px;
+  color: #aaa;
+}
+.record-item {
+  position: relative;
+  border-width: 1rpx;
+  border-style: solid;
+  border-color: #ccc;
+  border-radius: 3px;
+  margin: 10rpx 0;
+}
+.record-item-left {
+  padding: 10rpx 0 10rpx 7rpx;
+  position: relative;
+  width: 70%;
+}
+.record-item-right {
+  padding: 10rpx 7rpx 10rpx 0;
+  position: absolute;
+  width: 30%;
+  top: 0;
+  right: 0;
+  text-align: right
+}
+.record-item .title {
+  font-size: 14px;
+  display: block;
+}
+.record-item .subtitle {
+  font-size: 12px;
+  display: block;
+}
+.record-item .description {
+  font-size: 10px;
+  color: #aaa;
+  display: block;
+}
+.record-item .status {
+  font-size: 12px;
+  display: block;
+}
+.record-item .status.waiting {color: #999}
+.record-item .status.passed {color: #090}
+.record-item .status.not-pass {color: #f00}

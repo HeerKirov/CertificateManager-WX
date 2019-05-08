@@ -1,0 +1,23 @@
+function memberList(item) {
+    var mainStudentInfo = item['main_student_info']
+    var studentsInfo = item['students_info']
+    var teacher_info = item['teacher_info']
+    var result = '', first = true
+    if(mainStudentInfo != null) {
+        first = false
+        result += mainStudentInfo['name']
+    }
+    for(i = 0; i < studentsInfo.length; ++i) {
+        var student = studentsInfo[i]
+        if(first) {first = false} else {result += ', '}
+        result += student['name']
+    }
+    if(teacher_info) {
+        result += ' (指导教师: ' + teacher_info['name'] + ')'
+    }
+    return result
+}
+
+module.exports = {
+    memberList: memberList
+}

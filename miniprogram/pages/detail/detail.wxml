@@ -1,0 +1,62 @@
+<!--detail.wxml-->
+<wxs src='detail.wxs' module="wxs"/>
+<view class="container">
+    <view class='panel'>
+        <view class='field'>
+            <view class='label'>竞赛名称</view>
+            <view class='content'>{{data.competition_name}}</view>
+        </view>
+        <view class='field'>
+            <view class='label'>竞赛分类</view>
+            <view class='content'>{{data.competition_category}}</view>
+        </view>
+        <view class='field'>
+            <view class='label'>举办方</view>
+            <view class='content'>{{data.organizer}}</view>
+        </view>
+        <view class='field'>
+            <view class='label'>举办时间</view>
+            <view class='content'>{{data.hold_time}}</view>
+        </view>
+        <view class='space'></view>
+        <view class='field' wx:if='{{data.works_name}}'>
+            <view class='label'>作品名称</view>
+            <view class='content'>{{data.works_name}}</view>
+        </view>
+        <view class='field'>
+            <view class='label'>获奖等级</view>
+            <view class='content'>{{data.award_level}}</view>
+        </view>
+        <view class='field'>
+            <view class='label'>参赛成员</view>
+            <view class='content'>
+                <view wx:for='{{data.students}}' wx:key='card_id'>{{wxs.studentInfo(item)}}</view>
+            </view>
+        </view>
+        <view class='field'>
+            <view class='label'>指导教师</view>
+            <view class='content'>{{data.teacher.name || "(无)"}}</view>
+        </view>
+        <view class='space'></view>
+        <view class='field'>
+            <view class='label'>审核状态</view>
+            <view class='content status {{bindStatusClass[data.review_status]}}'>{{bindStatusName[data.review_status]}}</view>
+        </view>
+        <view class='field' wx:if='{{data.rating_category}}'>
+            <view class='label'>评级分类</view>
+            <view class='content'>{{data.rating_category}}</view>
+        </view>
+        <view class='field' wx:if='{{data.rating_level_title}}'>
+            <view class='label'>评级</view>
+            <view class='content'>{{data.rating_level_title}}</view>
+        </view>
+        <view class='space'></view>
+        <view class='image-fields'>
+            <view class='image-field' wx:key='id' wx:for='{{data.images}}'>
+                <label class='title'>{{item.category_name}}</label>
+                <image class='image' mode='aspectFit' src='{{item.file}}'></image>
+            </view>
+        </view>
+        <view class='space'></view>
+    </view>
+</view>

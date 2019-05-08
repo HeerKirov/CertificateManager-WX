@@ -1,0 +1,10 @@
+function studentInfo(studentItem) {
+    if(studentItem != null) {
+        return studentItem.subject + studentItem.grade + '级' + studentItem.number + '班 ' + studentItem.name + (studentItem.main ? ' (第一负责人)' : '')
+    }
+    return ''
+}
+
+module.exports = {
+    studentInfo: studentInfo
+}

@@ -1,0 +1,4 @@
+const prefix = 'manager/'
+const serverURL = 'https://server/manager'
+
+export {prefix,serverURL}

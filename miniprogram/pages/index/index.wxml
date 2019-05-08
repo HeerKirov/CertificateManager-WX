@@ -1,0 +1,40 @@
+<!--index.wxml-->
+<wxs src='index.wxs' module='wxs'/>
+<view class="container">
+  <view id='login-view' class="panel" wx:if="{{!login.logined}}">
+    <label class='subtitle'>学生端登录</label>
+    <input class='input' placeholder='请输入学号' bindinput='bindInputUsername'/>
+    <input class='input' placeholder='请输入密码' bindinput='bindInputPassword' password='true'/>
+    <button class='btn' bindtap='bindTapLogin'>登录</button>
+  </view>
+  <view id='main-view' class='main' wx:else>
+    <view class='top-bar'>
+      <view class='top-bar-left'>
+        <picker value="{{ui.filterStatus}}" range="{{filterStatusChoices}}" bindchange='bindChangeStatus'>
+          <view>{{filterStatusChoices[ui.filterStatus]}}</view>
+        </picker>
+      </view>
+      <view class='top-bar-right'>
+        <button bindtap='bindTapMenu' class='menu-btn'>+</button>
+      </view>
+    </view>
+    <view class='record-list'>
+      <view class='record-none-text' wx:if='{{data.length <= 0}}'>没有记录</view>
+      <view class='record-item' wx:for="{{data}}" wx:key="id" id='{{item.id}}' bindtap='bindTapItem'>
+        <view class='record-item-left'>
+          <label class='title'>{{item.competition_name}}</label>
+          <label class='subtitle'>{{item.award_level}}</label>
+          <label class='description'>{{wxs.memberList(item)}}</label>
+        </view>
+        <view class='record-item-right'>
+          <text class='status {{bindStatusClass[item.review_status]}}'>{{bindStatusName[item.review_status]}}</text>
+        </view>
+      </view>
+    </view>
+    <action-sheet hidden="{{!ui.showMenu}}" bindchange='bindChangeMenu'>
+      <action-sheet-item bindtap='bindTapNewRecord'>录入新记录</action-sheet-item>
+      <action-sheet-cancel>取消</action-sheet-cancel>
+    </action-sheet>
+  </view>
+
+</view>
