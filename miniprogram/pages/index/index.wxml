@@ -4,7 +4,7 @@
   <view id='login-view' class="panel" wx:if="{{!login.logined}}">
     <label class='subtitle'>学生端登录</label>
     <input class='input' placeholder='请输入学号' bindinput='bindInputUsername'/>
-    <input class='input' placeholder='请输入密码' bindinput='bindInputPassword' password='true'/>
+    <input class='input' placeholder='请输入密码' bindinput='bindInputPassword' bindconfirm="bindTapLogin" password='true'/>
     <button class='btn' bindtap='bindTapLogin'>登录</button>
   </view>
   <view id='main-view' class='main' wx:else>
@@ -33,8 +33,11 @@
     </view>
     <action-sheet hidden="{{!ui.showMenu}}" bindchange='bindChangeMenu'>
       <action-sheet-item bindtap='bindTapNewRecord'>录入新记录</action-sheet-item>
+      <action-sheet-item bindtap='bindTapProfile'>我</action-sheet-item>
       <action-sheet-cancel>取消</action-sheet-cancel>
     </action-sheet>
   </view>
-
+  <modal title='{{modal.title}}' hidden='{{!modal.on}}' no-cancel='{{!modal.cancel}}' bindconfirm='bindConfirmModal' bindcancel='bindCancelModal'>
+    {{modal.content}}
+  </modal>
 </view>

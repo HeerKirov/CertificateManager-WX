@@ -17,6 +17,8 @@ const STATUS_VALUE_LIST = ['', 'PASSED', 'NOT_PASS', 'WAITING']
 const app = getApp<IMyApp>()
 const client: Client = app.globalData.client
 
+let modalAction = null
+
 Page({
   data: {
     login: {
@@ -60,7 +62,6 @@ Page({
   bindInputUsername(e) {this.setData!({'login.username': e.detail.value})},
   bindInputPassword(e) {this.setData!({'login.password': e.detail.value})},
   bindTapLogin() {
-    console.log(this.data.login)
     client.auth.token.post({
       user_type: 'STUDENT', 
       username: this.data.login.username, 
@@ -68,10 +69,10 @@ Page({
         if(ok) {
           let token = d['token']
           client.setToken(token)
-          console.log('登录成功。')
           this.setData!({'login.logined': true})
+          this.requestForList()
         }else{
-          console.log('密码错误。')
+          this.modal('登录失败', '请检查用户名和密码。')
         }
     })
   },
@@ -79,8 +80,11 @@ Page({
   bindTapMenu() {this.setData!({'ui.showMenu': !this.data.ui.showMenu})},
   bindChangeMenu() {this.setData!({'ui.showMenu': !this.data.ui.showMenu})},
   bindTapNewRecord() {
-    console.log('Tap new record')
     this.bindChangeMenu()
+    wx.navigateTo({url: '../edit/edit'})
+  },
+  bindTapProfile() {
+    wx.navigateTo({url: '../profile/profile'})
   },
   //与筛选器有关的ui事件
   bindChangeStatus(e) {
@@ -90,7 +94,6 @@ Page({
   //与列表有关的ui事件
   bindTapItem(e) {
     wx.navigateTo({url: `../detail/detail?id=${e.currentTarget.id}`})
-    //TODO 页面跳转
   },
   //列表逻辑
   requestForList() {
@@ -98,9 +101,32 @@ Page({
       if(ok) {
         this.setData!({data: d})
       }else{
-        console.error(`列表拉取失败： ${s}`)
-        //TODO 正确的错误通知方式
+        this.modal('错误', '列表拉取失败。')
       }
     })
+  },
+  modal(title: string, content: string, action: (yes: boolean) => void = null) {
+    modalAction = action
+    this.setData!({
+      'modal.title': title,
+      'modal.content': content,
+      'modal.on': true,
+      'modal.cancel': !!action
+    })
+  },
+  bindConfirmModal() {
+    this.setData!({'modal.on': false})
+    if(modalAction != null) {
+      modalAction(true)
+      modalAction = null
+    }
+    
+  },
+  bindCancelModal() {
+    this.setData!({'modal.on': false})
+    if(modalAction != null) {
+      modalAction(false)
+      modalAction = null
+    }
   }
 })

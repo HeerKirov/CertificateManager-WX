@@ -1,7 +1,9 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/detail/detail"
+    "pages/detail/detail",
+    "pages/edit/edit",
+    "pages/profile/profile"
   ],
   "window": {
     "backgroundTextStyle": "light",

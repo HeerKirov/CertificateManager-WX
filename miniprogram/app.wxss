@@ -7,3 +7,7 @@
   justify-content: space-between;
   box-sizing: border-box;
 } 
+.p-1 {padding: 10rpx;}
+.p-2 {padding: 20rpx;}
+.mt-1 {margin-top: 10rpx;}
+.mt-2 {margin-top: 20rpx;}

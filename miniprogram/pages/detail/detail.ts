@@ -23,12 +23,16 @@ const client: Client = app.globalData.client
 
 Page({
   data: {
+    id: null,
     data: {},
     bindStatusName: STATUS_NAME,
     bindStatusClass: STATUS_CLASS 
   },
   onLoad(option?: {id?: string}) {
-    client.student.records.retrieve(option.id, (ok, s, d) => {
+    this.setData!({id: option.id})
+  },
+  onShow() {
+    client.student.records.retrieve(this.data.id, (ok, s, d) => {
       if(ok) {
         this.setData!({
           data: this.formatForDetail(d)
@@ -40,9 +44,11 @@ Page({
   },
   formatForDetail(d: any): any {
     return {
+      id: d.id,
       competition_name: d.competition_name,
       competition_category: d.competition_category,
       organizer: d.organizer,
+      hold_time: d.hold_time,
       works_name: d.works_name,
       award_level: d.award_level,
       students: ((main, array) => {
@@ -87,5 +93,8 @@ Page({
         return res
       })(d.images)
     }
+  },
+  bindTapEdit() {
+    wx.navigateTo({url: `../edit/edit?id=${this.data.data['id']}`})
   }
 })

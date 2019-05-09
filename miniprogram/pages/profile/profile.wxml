@@ -1,0 +1,17 @@
+<!--profile.wxml-->
+<view class="container">
+  <view class='panel'>
+    <view class='field'>
+      <view class='label'>账户</view>
+      <view class='content'>{{data.card_id}}</view>
+    </view>
+    <view class='field'>
+      <view class='label'>姓名</view>
+      <view class='content'>{{data.name}}</view>
+    </view>
+  </view>
+  <button bindtap='bindTapExit' class='bottom-btn'>退出登录</button>
+  <modal title='{{modal.title}}' hidden='{{!modal.on}}' no-cancel='{{!modal.cancel}}' bindconfirm='bindConfirmModal' bindcancel='bindCancelModal'>
+    {{modal.content}}
+  </modal>
+</view>

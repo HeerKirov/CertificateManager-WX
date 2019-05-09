@@ -1,0 +1,100 @@
+<!--edit.wxml-->
+<wxs src='edit.wxs' module="wxs"/>
+<view class="container">
+    <view class='panel'>
+        <view class='field'>
+            <view class='label'>竞赛名称</view>
+            <view class='content'><input class='input' bindchange='bindChangeCompetitionName' value='{{data.competition_name}}'></input></view>
+        </view>
+        <view class='field'>
+            <view class='label'>竞赛分类</view>
+            <view class='content'><input class='input' bindchange='bindChangeCompetitionCategory' value='{{data.competition_category}}'></input></view>
+        </view>
+        <view class='field'>
+            <view class='label'>举办方</view>
+            <view class='content'><input class='input' bindchange='bindChangeOrganizer' value='{{data.organizer}}'></input></view>
+        </view>
+        <view class='field'>
+            <view class='label'>举办时间</view>
+            <view class='content'><input class='input' placeholder="YYYY-MM-DD" bindchange='bindChangeHoldTime' value='{{data.hold_time}}'></input></view>
+        </view>
+        <view class='space'></view>
+        <view class='field'>
+            <view class='label'>作品名称</view>
+            <view class='content'><input class='input' bindchange='bindChangeWorksName' value='{{data.works_name}}'></input></view>
+        </view>
+        <view class='field'>
+            <view class='label'>获奖等级</view>
+            <view class='content'><input class='input' bindchange='bindChangeAwardLevel' value='{{data.award_level}}'></input></view>
+        </view>
+        <view class='field'>
+            <view class='label'>参赛成员</view>
+            <view class='content'>
+                <view class='line' wx:if='{{!data.students || data.students.length <= 0}}'>(无)</view>
+                <view class='line' wx:for='{{data.students}}' wx:key='card_id'>
+                    {{wxs.studentInfo(item)}}
+                    <button class='remove-btn' size="mini" id='{{index}}' bindtap='bindTapStudentRemove'>移除</button>
+                </view>
+                <button size='mini' bindtap='bindTapStudentEdit'>追加新的参赛成员</button>
+            </view>
+        </view>
+        <view class='field'>
+            <view class='label'>指导教师</view>
+            <view class='content line'>
+                <view class='line'>{{wxs.teacherInfo(data.teacher)}}</view>
+                <button size='mini' bindtap='bindTapTeacherEdit'>编辑指导教师</button>
+            </view>
+        </view>
+        <view class='space'></view>
+        <view class='image-fields'>
+            <view class='image-field'>
+                <label class='title'>比赛通知</label>
+                <image class='image' mode='aspectFit' wx:if='{{data.image.notice.file}}' src='{{data.image.notice.file}}'></image>
+                <button size="mini" id='notice' bindtap='bindTapUpload'>上传图片</button>
+            </view>
+            <view class='image-field'>
+                <label class='title'>获奖证书</label>
+                <image class='image' mode='aspectFit' wx:if='{{data.image.award.file}}' src='{{data.image.award.file}}'></image>
+                <button size="mini" id='award' bindtap='bindTapUpload'>上传图片</button>
+            </view>
+            <view class='image-field'>
+                <label class='title'>获奖名单页</label>
+                <image class='image' mode='aspectFit' wx:if='{{data.image.list.file}}' src='{{data.image.list.file}}'></image>
+                <button size="mini" id='list' bindtap='bindTapUpload'>上传图片</button>
+            </view>
+        </view>
+        <view class='space'></view>
+        <button class='submit-btn' type="primary" bindtap='bindTapSubmit'>提交</button>
+    </view>
+    <modal title='{{modal.title}}' hidden='{{!modal.on}}' no-cancel='{{!modal.cancel}}' bindconfirm='bindConfirmModal' bindcancel='bindCancelModal'>
+        {{modal.content}}
+    </modal>
+</view>
+<view class='cover' wx:if='{{teacherEdit.on}}'>
+    <view class='box'>
+        <button size='mini' class='close-btn' bindtap='bindTapTeacherEdit'>取消编辑</button>
+        <label>指导教师: {{wxs.teacherInfo(data.teacher)}}</label>
+        <input class='input' placeholder='输入工号或姓名搜索' bindconfirm='bindConfirmTeacherSearch'></input>
+        <scroll-view scroll-y class='scroll-view'>
+            <view wx:for='{{teacherEdit.list}}' wx:key='card_id' class='p-1' id='{{index}}' bindtap='bindTapTeacherSelect'>
+                <label class='text'>{{wxs.teacherInfo(item)}}</label>
+            </view>
+        </scroll-view>
+    </view>
+</view>
+<view class='cover' wx:if='{{studentEdit.on}}'>
+    <view class='box'>
+        <button size='mini' class='close-btn' bindtap='bindTapStudentEdit'>取消选择</button>
+        <switch checked="{{studentEdit.asMain}}" bindchange='bindChangeStudentAsMain'/>
+        <label>作为第一负责人</label>
+        <input class='input' placeholder='输入学号、姓名、班级搜索' bindconfirm='bindConfirmStudentSearch'></input>
+        <scroll-view scroll-y class='scroll-view'>
+            <view wx:for='{{studentEdit.list}}' wx:key='card_id' class='p-1' id='{{index}}' bindtap='bindTapStudentSelect'>
+                <label class='text'>{{wxs.studentInfo(item)}}</label>
+            </view>
+        </scroll-view>
+    </view>
+</view>
+<view class='loading' wx:if='{{loading}}'>
+    LOADING...
+</view>

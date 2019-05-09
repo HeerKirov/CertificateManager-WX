@@ -2,6 +2,7 @@
 <wxs src='detail.wxs' module="wxs"/>
 <view class="container">
     <view class='panel'>
+        <button bindtap='bindTapEdit' class='edit-btn'>编辑内容</button>
         <view class='field'>
             <view class='label'>竞赛名称</view>
             <view class='content'>{{data.competition_name}}</view>

@@ -33,6 +33,8 @@
   top: 0;
   width: 90%;
   height: 72rpx;
+  z-index: 2;
+  background-color: #fff
 }
 .top-bar-left {
   position: absolute;

@@ -1,0 +1,19 @@
+function studentInfo(studentItem) {
+    if(studentItem != null) {
+        return '[' + studentItem.card_id + '] ' + 
+            studentItem.subject + studentItem.grade + '级' + studentItem.number + '班 ' + studentItem.name + 
+            (studentItem.main ? ' (第一负责人)' : '')
+    }
+    return ''
+}
+function teacherInfo(teacherItem) {
+    if(teacherItem != null) {
+        return '[' + teacherItem.card_id + '] ' + teacherItem.name
+    }
+    return '(无)'
+}
+
+module.exports = {
+    studentInfo: studentInfo,
+    teacherInfo: teacherInfo
+}

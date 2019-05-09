@@ -34,7 +34,7 @@ class Client {
       let ret: any = {}
       if(this.token) ret['Authorization'] = `Token ${this.token}`
       if(contentType) ret['Content-Type'] = contentType
-      return this.token || contentType ? ret : null
+      return this.token || contentType ? ret : {}
   }
 
   private callbackSuccess(callback: (success: boolean, status: number | null, data: any) => void): 
@@ -128,6 +128,17 @@ class Client {
       }
       return ret
   }
+  private endpointImage(url: string): Object {
+    return (formData: any, fileName: string, filePath: string, callback: (ok: boolean, status: number | null, data: any) => void) => wx.uploadFile({
+      url: this.getURL(url),
+      name: fileName,
+      filePath,
+      formData,
+      header: this.getHeaders(),
+      success: this.callbackSuccess(callback),
+      fail: this.callbackFailed(callback)
+    })
+  }
 
   public auth: any = {
     login: this.endpoint('/auth/login', ['post']),
@@ -136,8 +147,13 @@ class Client {
     info: this.endpoint('/auth/info', ['get'])
   }
   public student: any = {
-    records: this.endpoint('/student/records', ['list', 'create', 'retrieve', 'update']),
-    //TODO image API
+    records: this.endpoint('/student/records', ['list', 'create', 'retrieve', 'update', 'delete']),
+    images: this.endpoint('/student/images', ['list', 'retrieve'], {
+      upload: this.endpointImage('/student/images')
+    }),
+    classes: this.endpoint('/student/classes', ['list', 'retrieve']),
+    students: this.endpoint('/student/students', ['list', 'retrieve']),
+    teachers: this.endpoint('/student/teachers', ['list', 'retrieve']),
   }
 }
 
